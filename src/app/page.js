@@ -18,7 +18,7 @@ export default function Home() {
           <span>Track. ROI.</span>
           <span>Manage. Assets.</span>
         </h1>
-        <Image 
+        <img
           src="/Assets/heroimg.jpg" 
           alt="Hero Image" 
           className="hero-image" 
@@ -39,7 +39,7 @@ export default function Home() {
             return (
               <div key={property.id} className={styles.slide}>
                 <div className={styles.propertyImage}>
-                  <Image
+                  <img
                     src={property.imageUrl}
                     alt={property.name}
                     width={600}
