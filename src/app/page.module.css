@@ -28,6 +28,11 @@
   min-width: 280px;
 }
 
+.slide:hover {
+  transform: scale(1.02);
+  transition: transform 0.3s ease;
+}
+
 .propertyImage {
   border-radius: 8px;
   overflow: hidden;

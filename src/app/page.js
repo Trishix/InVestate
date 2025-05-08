@@ -53,7 +53,7 @@ export default function Home() {
                   <div className={styles.details} style={{color: "purple"}}>
                     <div className={styles.detailItem}>
                       <span>Current Value</span>
-                      <span className={styles.value} style={{color: "purple"}}>₹{(property.currentValue / 10000000).toFixed(2)} Cr</span>
+                      <span className={styles.value} style={{color: "red"}}>₹{(property.currentValue / 10000000).toFixed(2)} Cr</span>
                     </div>
                     <div className={styles.detailItem}>
                       <span style={{color: "green"}}>ROI</span>
