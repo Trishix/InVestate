@@ -25,14 +25,6 @@
   display: block;
 }
 
-.hero h1 {
-  position: absolute;
-  top: 30%;
-  left: 20%;
-  color: white;
-  font-size: 3.5rem;
-  font-weight: bold;
-}
 
 .hero h1 span {
   display: block;
@@ -46,4 +38,43 @@
 }
 * {
   margin: 0;
+}
+.hero h1 {
+  position: absolute;
+  top: 30%;
+  left: 20%;
+  color: white;
+  font-size: 3.5rem;
+  font-weight: bold;
+  max-width: 80%;
+  line-height: 1.2;
+}
+
+@media screen and (max-width: 1200px) {
+  .hero h1 {
+    font-size: 3rem;
+  }
+}
+
+@media screen and (max-width: 992px) {
+  .hero h1 {
+    font-size: 2.5rem;
+    left: 15%;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .hero h1 {
+    font-size: 2rem;
+    left: 10%;
+    top: 35%;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .hero h1 {
+    font-size: 1.5rem;
+    left: 5%;
+    top: 40%;
+  }
 }
