@@ -6,11 +6,12 @@ export default function Home() {
   return (
     <div className="home-page">
       <nav className="navbar">
-        <a href="">Home</a>
-        <a href="">About Us</a>
-        <a href="">Services</a>
-        <a href="">Contact Us</a>
-      </nav>
+  <a href="/">Home</a>
+  <a href="/aboutus">About Us</a> 
+  <a href="/services">Services</a> 
+  <a href="/contactus">Contact Us</a>
+</nav>
+
 
       <section className="hero">
         <h1>
