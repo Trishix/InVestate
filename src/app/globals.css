@@ -2,7 +2,7 @@
   color: white;
   background-color: black;
   display: flex;
-  justify-content: space-evenly ;
+  justify-content: space-evenly;
   align-items: center;
   padding: 2rem;
   font-size: 1.2rem;
@@ -12,6 +12,7 @@
   color: white;
   text-decoration: none;
 }
+
 .hero {
   position: relative;
   width: 100%;
@@ -32,7 +33,14 @@
   font-size: 3.5rem;
   font-weight: bold;
 }
+
 .hero h1 span {
   display: block;
 }
 
+.footer {
+  background: #111;
+  color: white;
+  padding: 2rem;
+  text-align: center;
+}
