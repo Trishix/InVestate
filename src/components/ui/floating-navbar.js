@@ -1,10 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useRef } from "react";
-import {
-  motion,
-  AnimatePresence,
-} from "motion/react";
+import { motion, AnimatePresence } from "motion/react";
 import { cn } from "@/lib/utils";
 import { FaHome, FaInfoCircle, FaServicestack, FaBlog } from "react-icons/fa";
 
@@ -16,7 +13,7 @@ const navItems = [
 ];
 
 export const FloatingNav = ({ className }) => {
-  const [visible, setVisible] = useState(true); // visible by default
+  const [visible, setVisible] = useState(false); // hidden initially
   const lastScrollY = useRef(0);
 
   useEffect(() => {
@@ -24,13 +21,13 @@ export const FloatingNav = ({ className }) => {
       const currentScrollY = window.scrollY;
 
       if (currentScrollY <= 0) {
-        // At top of page, always show
+        // At top of page, always hide
         setVisible(false);
       } else if (currentScrollY > lastScrollY.current) {
-        // Scrolling down -> show navbar
+        // Scrolling down -> hide navbar
         setVisible(false);
       } else {
-        // Scrolling up -> hide navbar
+        // Scrolling up -> show navbar
         setVisible(true);
       }
 
