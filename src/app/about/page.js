@@ -158,7 +158,7 @@ export default function AboutUs() {
                       className="object-cover"
                     />
                   </div>
-                  <div className="p-4 h-full w-full bg-white-400 rounded-md bg-clip-padding backdrop-filter backdrop-blur-sm bg-opacity-70 border border-gray-100">
+                  <div className="p-4 ">
                     <h3 className="text-xl font-bold text-gray-800">{member.name}</h3>
                     <p className="text-blue-600 font-medium">{member.role}</p>
                     <p className="text-gray-600 mt-2">{member.bio}</p>
