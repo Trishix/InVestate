@@ -2,6 +2,7 @@
 import { FloatingNav } from "../components/ui/floating-navbar.js";
 import Footer from "../components/footer.js";
 import Navbar from "@/components/navbar.js";
+import "./globals.css";
 
 
 export const metadata = {

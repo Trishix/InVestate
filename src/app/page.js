@@ -1,6 +1,6 @@
 import Image from "next/image";
 import React from "react";
-import styles from "./globals.css";
+import "./globals.css";
 
 export default function Home() {
   return (
