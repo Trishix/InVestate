@@ -1,10 +1,95 @@
 // app/about-us/page.js
+"use client";
 import Image from 'next/image';
+import useEmblaCarousel from 'embla-carousel-react';
+import AutoScroll from 'embla-carousel-auto-scroll';
+import { useEffect } from 'react';
+
+const teamMembers = [
+    {
+      name: "Trishit Swarnakar",
+      role: "Lead Full-Stack Developer",
+      bio: "AI-focused full-stack developer with experience leading production-ready projects using drones, bots, and web tech.",
+      image: "/Assets/Trishit.jpg",
+      linkedin: "https://www.linkedin.com/in/trishit-swarnakar/"
+    },
+    {
+      name: "Bhavesh Bansal",
+      role: "Senior Backend Engineer",
+      bio: "Experienced in building scalable backend systems and mentoring developers across AI-powered SaaS platforms.",
+      image: "/Assets/Bhavesh_Bansal.jpeg",
+      linkedin: "https://www.linkedin.com/in/bhavesh-bansal-016879148/"
+    },
+    {
+      name: "Vishal Sharma",
+      role: "Frontend Architect",
+      bio: "Specializes in React, Next.js, and mobile tech. Built scalable systems in EdTech and e-commerce industries.",
+      image: "/Assets/Vishal.jpeg",
+      linkedin: "https://www.linkedin.com/in/vishal-sharma-715136141/"
+    },
+    {
+      name: "Rahul Kumar",
+      role: "Full-Stack Engineer",
+      bio: "Skilled in React, Node.js, and MongoDB. Passionate about turning ideas into high-performing web apps.",
+      image: "/Assets/Rahul.jpeg",
+      linkedin: "https://www.linkedin.com/in/rahulsde/"
+    },
+    {
+      name: "Kartik Katiyar",
+      role: "Data-Driven Full-Stack Developer",
+      bio: "Experienced in full-stack projects using MERN stack and well-versed in Java DSA.",
+      image: "/Assets/Kartik Katiyar.jpeg",
+      linkedin: "https://www.linkedin.com/in/kartikkatiyar/"
+    },
+    {
+      name: "Swati Priya",
+      role: "Frontend Engineer & Product Instructor",
+      bio: "Ex-SteelEye developer and SIH'24 Jury. Built national-level apps and mentors at NST. IIT Patna alumna.",
+      image: "/Assets/Swati.jpeg",
+      linkedin: "https://www.linkedin.com/in/swatipriya87899/"
+    }
+  ];
+  
+  
 
 export default function AboutUs() {
+
+  // Enable loop for seamless infinite scroll
+  const [emblaRef, emblaApi] = useEmblaCarousel(
+    {
+      loop: true, // Ensures smooth, infinite looping
+      align: "start",
+      skipSnaps: false,
+      dragFree: false,
+      speed: 5, // Lower is slower, adjust for smoothness[1][5]
+    },
+    [
+      AutoScroll({
+        speed: 5, // Lower is slower, adjust for smoothness[3]
+        stopOnInteraction: true,
+        stopOnMouseEnter: true,
+        startDelay: 1000,
+      }),
+    ]
+  );
+
+  // Optional: Pause auto-scroll on hover
+  useEffect(() => {
+    if (!emblaApi) return;
+    const node = emblaApi.rootNode();
+    const onMouseEnter = () => emblaApi.plugins().autoScroll.stop();
+    const onMouseLeave = () => emblaApi.plugins().autoScroll.play();
+    node.addEventListener('mouseenter', onMouseEnter);
+    node.addEventListener('mouseleave', onMouseLeave);
+    return () => {
+      node.removeEventListener('mouseenter', onMouseEnter);
+      node.removeEventListener('mouseleave', onMouseLeave);
+    };
+  }, [emblaApi]);
+
   return (
     <main>
-      {/* Hero Section */}
+        {/* Hero Section */}
       <section className="relative h-96 w-full">
         <div className="absolute inset-0 bg-black/50 z-10" />
         <Image 
@@ -101,74 +186,51 @@ export default function AboutUs() {
           </div>
         </div>
       </section>
-
-      {/* Team Section */}
       <section className="py-16 bg-gray-50">
-        <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center mb-12 text-gray-800">
-            Meet Our Leaders
-          </h2>
-          
-          <div className="relative">
-            <div className="flex overflow-x-auto pb-6 space-x-6 scrollbar-hide">
-              {[
-                {
-                  name: "Trishit Swarnakar",
-                  role: "Founder & CEO",
-                  bio: "Ex-McKinsey with 15+ years in real estate. Passionate about financial literacy.",
-                  image: "/Assets/Trishit.jpg"
-                },
-                {
-                  name: "Bhavesh Bansal",
-                  role: "CTO",
-                  bio: "Tech leader from IIT Bombay. Built India's first property analytics engine.",
-                  image: "/Assets/Bhavesh_Bansal.jpeg"
-                },
-                {
-                  name: "Vishal Sharma",
-                  role: "Head of Growth",
-                  bio: "Formerly with NoBroker. Scaling Investate across India.",
-                  image: "/Assets/Vishal.jpeg"
-                },
-                {
-                  name: "Rahul Kumar",
-                  role: "Product Lead",
-                  bio: "User-centric designer making complex data simple.",
-                  image: "/Assets/Rahul.jpeg"
-                },
-                {
-                  name: "Kartik Katiyar",
-                  role: "Head of Data",
-                  bio: "Real estate data expert with 12 years at PropTiger.",
-                  image: "/Assets/Kartik Katiyar.jpeg"
-                },
-                {
-                  name: "Swati Priya",
-                  role: "Customer Success Lead",
-                  bio: "Ensuring our users get the most value from Investate.",
-                  image: "/Assets/Swati.jpeg"
-                }
-              ].map((member, index) => (
-                <div key={index} className="flex-shrink-0 w-64 bg-white rounded-lg shadow-md overflow-hidden">
-                  <div className="h-48 relative">
-                    <Image 
-                      src={member.image}
-                      alt={member.name}
-                      fill
-                      className="object-cover"
-                    />
-                  </div>
-                  <div className="p-4 ">
-                    <h3 className="text-xl font-bold text-gray-800">{member.name}</h3>
-                    <p className="text-blue-600 font-medium">{member.role}</p>
-                    <p className="text-gray-600 mt-2">{member.bio}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
+  <div className="container mx-auto px-4">
+    <h2 className="text-3xl font-bold text-center mb-12 text-gray-800">
+      Meet Our Leaders
+    </h2>
+    <div className="relative">
+      <div ref={emblaRef} className="overflow-x-hidden">
+        <div className="flex space-x-6">
+          {teamMembers.map((member, index) => (
+            <a
+              key={index}
+              href={member.linkedin || "#"}
+              target={member.linkedin ? "_blank" : undefined}
+              rel={member.linkedin ? "noopener noreferrer" : undefined}
+              tabIndex={0}
+              className={`
+                flex-shrink-0 w-64 bg-white rounded-lg shadow-md overflow-hidden transition-all duration-200
+                border-2 border-transparent
+                hover:border-blue-600 focus:border-blue-600 active:border-blue-600
+                outline-none
+                hover:shadow-xl
+                cursor-pointer
+              `}
+              aria-label={`LinkedIn profile of ${member.name}`}
+            >
+              <div className="h-48 relative">
+                <Image
+                  src={member.image}
+                  alt={member.name}
+                  fill
+                  className="object-cover"
+                />
+              </div>
+              <div className="p-4">
+                <h3 className="text-xl font-bold text-gray-800">{member.name}</h3>
+                <p className="text-blue-600 font-medium">{member.role}</p>
+                <p className="text-gray-600 mt-2">{member.bio}</p>
+              </div>
+            </a>
+          ))}
         </div>
-      </section>
+      </div>
+    </div>
+  </div>
+</section>
     </main>
   );
 }
