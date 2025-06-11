@@ -68,7 +68,7 @@ export default function AboutUs() {
       </section>
 
       {/* Mission & Vision Section */}
-      <section className="py-16">
+      <section className="py-16 bg-black">
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-2 gap-12">
             <div className="bg-white p-8 rounded-lg shadow-md">
