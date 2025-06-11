@@ -92,26 +92,24 @@ export default function Services() {
             <div className="flex overflow-x-auto pb-6 space-x-6 scrollbar-hide">
               {services.map((service, idx) => (
                 <button
-                  key={idx}
-                  className={`flex-shrink-0 w-72 bg-white rounded-lg shadow-md overflow-hidden border-2 transition-all duration-200 ${
-                    selectedService === idx ? 'border-blue-600' : 'border-transparent'
-                  }`}
-                  onClick={() => setSelectedService(idx)}
-                  aria-label={service.title}
-                >
-                  <div className="h-40 relative">
-                    <Image 
-                      src={service.image}
-                      alt={service.title}
-                      fill
-                      className="object-cover"
-                    />
-                  </div>
-                  <div className="p-4 text-left">
-                    <h3 className="text-lg font-bold text-gray-800">{service.title}</h3>
-                    <p className="text-gray-600 mt-2">{service.shortDesc}</p>
-                  </div>
-                </button>
+                key={idx}
+                className="flex-shrink-0 w-72 bg-white rounded-lg shadow-md overflow-hidden border-2 border-transparent hover:border-blue-600 transition-all duration-200"
+                onClick={() => setSelectedService(idx)}
+                aria-label={service.title}
+              >
+                <div className="h-40 relative">
+                  <Image 
+                    src={service.image}
+                    alt={service.title}
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+                <div className="p-4 text-left">
+                  <h3 className="text-lg font-bold text-gray-800">{service.title}</h3>
+                  <p className="text-gray-600 mt-2">{service.shortDesc}</p>
+                </div>
+              </button>
               ))}
             </div>
           </div>

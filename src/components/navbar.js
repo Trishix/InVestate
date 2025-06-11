@@ -6,13 +6,13 @@ export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
-    <nav className="bg-black text-white px-6 py-4 shadow-md">
+    <nav className="bg-black text-white px-7 py-5 shadow-md">
       <div className="flex justify-between items-center">
         {/* Logo */}
-        <div className="text-xl font-bold">Investate</div>
+        <div className="text-4xl font-bold">InVestate</div>
 
         {/* Desktop Links */}
-        <div className="hidden md:flex gap-6 text-base">
+        <div className="hidden md:flex gap-6 text-lg">
           <a href="./" className="hover:text-gray-300">Home</a>
           <a href="./about" className="hover:text-gray-300">About</a>
           <a href="./services" className="hover:text-gray-300">Services</a>

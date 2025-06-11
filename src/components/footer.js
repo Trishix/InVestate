@@ -44,7 +44,7 @@ export default function Footer() {
 
       {/* Copyright */}
       <div className="border-t border-gray-800 text-center py-4 text-sm text-gray-400">
-        © {new Date().getFullYear()} Investate. All rights reserved.
+        © {new Date().getFullYear()} InVestate. All rights reserved.
       </div>
     </footer>
   );
