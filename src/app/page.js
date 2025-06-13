@@ -32,7 +32,7 @@ export default function Home() {
                 href="/services" // Link to your services page
                 className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-md transition duration-300"
               >
-                Explore Our Services
+                Log in 
               </a>
               <a
                 href="https://calendly.com/trishitofficial/30min" // Link to your about us page
@@ -44,69 +44,6 @@ export default function Home() {
           </div>
         </div>
       </section>
-
-      {/* Featured Areas (Example Section - Adapt to Your Needs) 
-     <section className="py-16 bg-gray-50">
-        <div className="container mx-auto">
-          <h2 className="text-3xl font-bold text-center mb-8 text-gray-800">
-            Featured Investment Areas
-          </h2>
-          {/* Grid of featured areas - replace with your actual data 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="bg-white rounded-lg shadow-md overflow-hidden">
-              <Image
-                src="/Assets/mumbai_property.jpg" // Replace with actual image
-                alt="Mumbai"
-                width={600}
-                height={400}
-                className="object-cover h-48 w-full"
-              />
-              <div className="p-4">
-                <h3 className="text-xl font-semibold text-gray-800 mb-2">Mumbai</h3>
-                <p className="text-gray-600">Explore high-yield opportunities in India's financial capital.</p>
-                <a href="#" className="text-blue-600 hover:text-blue-800">
-                  View Properties
-                </a>
-              </div>
-            </div>
-            {/* Repeat for other featured areas */}
-             {/* <div className="bg-white rounded-lg shadow-md overflow-hidden">
-              <Image
-                src="/Assets/banglore_property.jpg" // Replace with actual image
-                alt="Banglore"
-                width={600}
-                height={400}
-                className="object-cover h-48 w-full"
-              />
-              <div className="p-4">
-                <h3 className="text-xl font-semibold text-gray-800 mb-2">Banglore</h3>
-                <p className="text-gray-600">Explore high-yield opportunities in India's financial capital.</p>
-                <a href="#" className="text-blue-600 hover:text-blue-800">
-                  View Properties
-                </a>
-              </div>
-            </div>
-             <div className="bg-white rounded-lg shadow-md overflow-hidden">
-              <Image
-                src="/Assets/delhi_property.jpg" // Replace with actual image
-                alt="Delhi"
-                width={600}
-                height={400}
-                className="object-cover h-48 w-full"
-              />
-              <div className="p-4">
-                <h3 className="text-xl font-semibold text-gray-800 mb-2">Delhi</h3>
-                <p className="text-gray-600">Explore high-yield opportunities in India's financial capital.</p>
-                <a href="#" className="text-blue-600 hover:text-blue-800">
-                  View Properties
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section> */} 
-
-      {/* Add more sections as needed */}
     </main>
   );
 }
