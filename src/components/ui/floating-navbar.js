@@ -54,7 +54,7 @@ export const FloatingNav = ({ className }) => {
         >
           {/* Left brand text */}
           <span className="font-bold text-black dark:text-white mr-6 select-none text-lg">
-            Investate
+            InVestate
           </span>
 
           {/* Nav Links */}

@@ -29,7 +29,7 @@ export default function Home() {
             </p>
             <div className="flex justify-center space-x-4">
               <a
-                href="/services" // Link to your services page
+                href="/login" // Link to your services page
                 className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-md transition duration-300"
               >
                 Log in 
