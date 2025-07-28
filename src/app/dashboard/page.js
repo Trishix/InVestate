@@ -10,15 +10,15 @@ export default function Dashboard() {
   const totalProperties = properties.length;
   const totalPortfolioValue = properties.reduce((sum, property) => sum + property.currentValue, 0);
   const totalAnnualRent = tenants.reduce((sum, tenant) => sum + (tenant.monthlyRent * 12), 0);
-  const averageROI = (performanceData.reduce((sum, data) => sum + data.roi, 0) / performanceData.length).toFixed(1);
+  const averageROI = (performanceData.reduce((sum, data) => sum + data.roi, 0) / performanceData.length);
 
   // Prepare property performance data
   const propertyPerformanceData = properties.map(property => {
     const performance = performanceData.find(p => p.propertyId === property.id);
     const tenant = tenants.find(t => t.propertyId === property.id);
     const rentalYield = tenant 
-      ? ((tenant.monthlyRent * 12 / property.currentValue) * 100).toFixed(1)
-      : '0.0';
+      ? ((tenant.monthlyRent * 12 / property.currentValue) * 100)
+      : 0;
     
     return {
       name: property.name.split(' ')[0],
@@ -27,7 +27,8 @@ export default function Dashboard() {
       purchasePrice: property.purchasePrice,
       roi: performance?.roi || 0,
       rentalYield: rentalYield,
-      monthlyRent: tenant?.monthlyRent || 0
+      monthlyRent: tenant?.monthlyRent || 0,
+      valueGrowth: ((property.currentValue - property.purchasePrice) / property.purchasePrice * 100)
     };
   });
 
@@ -52,13 +53,15 @@ export default function Dashboard() {
           '#FF6384',
           '#36A2EB',
           '#FFCE56',
-          '#4BC0C0'
+          '#4BC0C0',
+          '#9966FF'
         ],
         hoverBackgroundColor: [
           '#FF6384',
           '#36A2EB',
           '#FFCE56',
-          '#4BC0C0'
+          '#4BC0C0',
+          '#9966FF'
         ]
       }
     ]
@@ -71,25 +74,13 @@ export default function Dashboard() {
       {
         label: 'ROI (%)',
         data: propertyPerformanceData.map(p => p.roi),
-        backgroundColor: '#36A2EB',
-        borderColor: '#36A2EB',
+        backgroundColor: propertyPerformanceData.map(p => 
+          p.roi >= 0 ? 'rgba(75, 192, 192, 0.7)' : 'rgba(255, 99, 132, 0.7)'
+        ),
+        borderColor: propertyPerformanceData.map(p => 
+          p.roi >= 0 ? 'rgba(75, 192, 192, 1)' : 'rgba(255, 99, 132, 1)'
+        ),
         borderWidth: 1
-      }
-    ]
-  };
-
-  // Rental Income vs Value Scatter Chart
-  const rentalVsValueData = {
-    labels: propertyPerformanceData.map(p => p.name),
-    datasets: [
-      {
-        label: 'Monthly Rent vs Property Value',
-        data: propertyPerformanceData.map(p => ({
-          x: p.value / 10000000, // in Cr
-          y: p.monthlyRent / 1000, // in K
-          r: 15
-        })),
-        backgroundColor: '#FF6384',
       }
     ]
   };
@@ -123,20 +114,45 @@ export default function Dashboard() {
       {
         label: 'Income',
         data: Object.values(monthlySummary).map(m => m.income / 1000), // in K
-        borderColor: '#4BC0C0',
-        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+        borderColor: '#10B981',
+        backgroundColor: 'rgba(16, 185, 129, 0.1)',
         tension: 0.1,
         fill: true
       },
       {
         label: 'Expenses',
         data: Object.values(monthlySummary).map(m => m.expense / 1000), // in K
-        borderColor: '#FF6384',
-        backgroundColor: 'rgba(255, 99, 132, 0.2)',
+        borderColor: '#EF4444',
+        backgroundColor: 'rgba(239, 68, 68, 0.1)',
         tension: 0.1,
         fill: true
       }
     ]
+  };
+
+  // Helper function to format numbers with color
+  const formatNumberWithColor = (value, isCurrency = false, isPercentage = false) => {
+    const numericValue = typeof value === 'string' ? parseFloat(value) : value;
+    const color = numericValue >= 0 ? 'text-green-600' : 'text-red-600';
+    const prefix = isCurrency ? '₹' : '';
+    const suffix = isPercentage ? '%' : '';
+    
+    let formattedValue;
+    if (isCurrency) {
+      if (Math.abs(numericValue) >= 10000000) {
+        formattedValue = (numericValue / 10000000).toFixed(2) + ' Cr';
+      } else if (Math.abs(numericValue) >= 100000) {
+        formattedValue = (numericValue / 100000).toFixed(1) + ' L';
+      } else if (Math.abs(numericValue) >= 1000) {
+        formattedValue = (numericValue / 1000).toFixed(0) + ' K';
+      } else {
+        formattedValue = numericValue.toFixed(0);
+      }
+    } else {
+      formattedValue = numericValue.toFixed(1);
+    }
+    
+    return <span className={`font-semibold ${color}`}>{prefix}{formattedValue}{suffix}</span>;
   };
 
   return (
@@ -145,17 +161,25 @@ export default function Dashboard() {
       
       {/* Summary Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-        {[
-          { title: 'Total Properties', value: totalProperties },
-          { title: 'Portfolio Value', value: `₹${(totalPortfolioValue / 10000000).toFixed(2)} Cr` },
-          { title: 'Annual Rental Income', value: `₹${(totalAnnualRent / 100000).toFixed(1)} L` },
-          { title: 'Avg. ROI', value: `${averageROI}%` }
-        ].map((card, index) => (
-          <div key={index} className="bg-white p-6 rounded-lg shadow">
-            <h3 className="text-gray-500 text-sm font-medium">{card.title}</h3>
-            <p className="text-2xl font-bold text-gray-800">{card.value}</p>
-          </div>
-        ))}
+        <div className="bg-white p-6 rounded-lg shadow">
+          <h3 className="text-gray-500 text-sm font-medium">Total Properties</h3>
+          <p className="text-2xl font-bold text-gray-800">{totalProperties}</p>
+        </div>
+        
+        <div className="bg-white p-6 rounded-lg shadow">
+          <h3 className="text-gray-500 text-sm font-medium">Portfolio Value</h3>
+          <p className="text-2xl font-bold text-gray-800">₹{(totalPortfolioValue / 10000000).toFixed(2)} Cr</p>
+        </div>
+        
+        <div className="bg-white p-6 rounded-lg shadow">
+          <h3 className="text-gray-500 text-sm font-medium">Annual Rental Income</h3>
+          <p className="text-2xl font-bold text-green-600">₹{(totalAnnualRent / 100000).toFixed(1)} L</p>
+        </div>
+        
+        <div className="bg-white p-6 rounded-lg shadow">
+          <h3 className="text-gray-500 text-sm font-medium">Avg. ROI</h3>
+          {formatNumberWithColor(averageROI, false, true)}
+        </div>
       </div>
 
       {/* Charts Section */}
@@ -201,6 +225,15 @@ export default function Dashboard() {
                       text: 'ROI (%)'
                     }
                   }
+                },
+                plugins: {
+                  tooltip: {
+                    callbacks: {
+                      label: function(context) {
+                        return `ROI: ${context.raw}%`;
+                      }
+                    }
+                  }
                 }
               }}
             />
@@ -231,7 +264,7 @@ export default function Dashboard() {
 
         {/* Rental Yield vs Property Value */}
         <div className="bg-white p-6 rounded-lg shadow">
-          <h2 className="text-xl font-semibold text-gray-800 mb-4">Rent vs Property Value</h2>
+          <h2 className="text-xl font-semibold text-gray-800 mb-4">Rental Yield vs Property Value</h2>
           <div className="h-64">
             <Bar 
               data={{
@@ -240,13 +273,13 @@ export default function Dashboard() {
                   {
                     label: 'Property Value (₹Cr)',
                     data: propertyPerformanceData.map(p => p.value / 10000000),
-                    backgroundColor: '#36A2EB',
+                    backgroundColor: '#3B82F6',
                     yAxisID: 'y'
                   },
                   {
-                    label: 'Monthly Rent (₹K)',
-                    data: propertyPerformanceData.map(p => p.monthlyRent / 1000),
-                    backgroundColor: '#FFCE56',
+                    label: 'Rental Yield (%)',
+                    data: propertyPerformanceData.map(p => p.rentalYield),
+                    backgroundColor: '#10B981',
                     yAxisID: 'y1'
                   }
                 ]
@@ -270,7 +303,7 @@ export default function Dashboard() {
                     position: 'right',
                     title: {
                       display: true,
-                      text: 'Monthly Rent (₹K)'
+                      text: 'Rental Yield (%)'
                     },
                     grid: {
                       drawOnChartArea: false
@@ -293,6 +326,7 @@ export default function Dashboard() {
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Property</th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Current Value</th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Purchase Price</th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Value Growth</th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ROI</th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Rental Yield</th>
               </tr>
@@ -303,8 +337,15 @@ export default function Dashboard() {
                   <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{property.fullName}</td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">₹{(property.value / 10000000).toFixed(2)} Cr</td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">₹{(property.purchasePrice / 10000000).toFixed(2)} Cr</td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{property.roi}%</td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{property.rentalYield}%</td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm">
+                    {formatNumberWithColor(property.valueGrowth, false, true)}
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm">
+                    {formatNumberWithColor(property.roi, false, true)}
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-green-600 font-medium">
+                    {property.rentalYield.toFixed(1)}%
+                  </td>
                 </tr>
               ))}
             </tbody>
@@ -336,7 +377,7 @@ export default function Dashboard() {
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                       {new Date(tenant.leaseStart).toLocaleDateString()} - {new Date(tenant.leaseEnd).toLocaleDateString()}
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">₹{(tenant.monthlyRent / 1000).toFixed(0)}K</td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-green-600 font-medium">₹{(tenant.monthlyRent / 1000).toFixed(0)}K</td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{tenant.phone}</td>
                   </tr>
                 );
